@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mera Rozgar — Real Ad Rewards</title>
+<meta name="description" content="Watch real rewarded ads, earn real cash. Optional Pro upgrade for bigger daily caps." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0F172A;
+    --bg-elevated:#131E37;
+    --bg-elevated-2:#182548;
+    --gold:#FACC15;
+    --gold-soft:#FDE68A;
+    --bronze:#B45309;
+    --text:#F8FAFC;
+    --muted:#94A3B8;
+    --muted-2:#64748B;
+    --success:#10B981;
+    --error:#EF4444;
+    --border:rgba(250,204,21,0.14);
+    --border-soft:rgba(255,255,255,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(250,204,21,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, rgba(180,83,9,0.12), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-0.02em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  a{color:inherit;text-decoration:none;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(15,23,42,0.72);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Sora',sans-serif;font-weight:700;font-size:19px;}
+  .logo-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--gold),var(--bronze));
+    display:flex;align-items:center;justify-content:center;
+    color:#1a1200;font-weight:800;font-size:15px;
+  }
+  .nav-links{display:flex;gap:32px;font-size:14.5px;color:var(--muted);}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-cta{display:flex;gap:12px;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 22px;border-radius:11px;font-weight:600;font-size:14.5px;
+    cursor:pointer;border:none;transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-gold{
+    background:linear-gradient(135deg,var(--gold),#EAB308);
+    color:#1a1200;
+    box-shadow:0 4px 20px rgba(250,204,21,0.25);
+  }
+  .btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 26px rgba(250,204,21,0.4);}
+  .btn-ghost{
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--border-soft);
+    color:var(--text);
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.08);}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;transform:none !important;}
+  .nav-toggle{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+
+  /* HERO */
+  .hero{position:relative;z-index:1;padding:72px 0 40px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;
+    color:var(--gold);background:rgba(250,204,21,0.08);
+    border:1px solid var(--border);padding:6px 14px;border-radius:100px;
+    margin-bottom:22px;text-transform:uppercase;
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .hero h1{font-size:52px;line-height:1.06;font-weight:800;margin-bottom:20px;}
+  .hero h1 .accent{background:linear-gradient(135deg,var(--gold),var(--gold-soft));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{font-size:17px;color:var(--muted);max-width:480px;margin-bottom:32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;}
+  .hero-note{font-size:13px;color:var(--muted-2);display:flex;align-items:center;gap:8px;}
+  .hero-note svg{flex-shrink:0;}
+
+  /* SIMULATOR CARD */
+  .sim-card{
+    background:linear-gradient(180deg,var(--bg-elevated),var(--bg-elevated-2));
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+    position:relative;
+    overflow:hidden;
+  }
+  .sim-card::before{
+    content:"";position:absolute;top:-40%;right:-30%;width:60%;height:80%;
+    background:radial-gradient(circle,rgba(250,204,21,0.14),transparent 70%);
+    pointer-events:none;
+  }
+  .sim-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;position:relative;}
+  .sim-head span{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;}
+  .sim-live{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--success);font-family:'JetBrains Mono',monospace;}
+  .sim-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+  .wallet-display{position:relative;margin-bottom:24px;}
+  .wallet-label{font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .wallet-amount{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:var(--gold);transition:transform .2s ease;}
+  .wallet-amount.bump{animation:bump .35s ease;}
+  @keyframes bump{0%{transform:scale(1);}40%{transform:scale(1.06);}100%{transform:scale(1);}}
+
+  .ad-slot{
+    background:rgba(0,0,0,0.25);
+    border:1px dashed var(--border-soft);
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .ad-slot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .ad-slot-row .rate{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);}
+  .progress-track{height:8px;border-radius:100px;background:rgba(255,255,255,0.06);overflow:hidden;margin-bottom:6px;}
+  .progress-fill{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,var(--bronze),var(--gold));transition:width .1s linear;}
+  .ad-status{font-size:12.5px;color:var(--muted-2);font-family:'JetBrains Mono',monospace;}
+
+  .sim-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .sim-stat{background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:12px;padding:12px 14px;}
+  .sim-stat .n{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;}
+  .sim-stat .l{font-size:11.5px;color:var(--muted-2);margin-top:2px;}
+
+  .toast{
+    position:absolute;top:20px;right:20px;
+    background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);
+    color:var(--success);font-family:'JetBrains Mono',monospace;font-size:13px;
+    padding:8px 14px;border-radius:10px;opacity:0;transform:translateY(-8px);
+    transition:all .3s ease;pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  /* TRUST STRIP */
+  .compare{padding:60px 0;position:relative;z-index:1;}
+  .compare-head{text-align:center;max-width:600px;margin:0 auto 40px;}
+  .compare-head .eyebrow{margin-bottom:16px;}
+  .compare-head h2{font-size:32px;margin-bottom:12px;}
+  .compare-head p{color:var(--muted);font-size:15.5px;}
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .compare-col{border-radius:18px;padding:26px;border:1px solid var(--border-soft);}
+  .compare-col.bad{background:rgba(239,68,68,0.04);border-color:rgba(239,68,68,0.2);}
+  .compare-col.good{background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.25);}
+  .compare-col h3{font-size:16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .compare-col.bad h3{color:#F87171;}
+  .compare-col.good h3{color:#34D399;}
+  .compare-list{list-style:none;}
+  .compare-list li{display:flex;gap:10px;padding:9px 0;font-size:14.5px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.04);}
+  .compare-list li:last-child{border-bottom:none;}
+  .compare-list li svg{flex-shrink:0;margin-top:2px;}
+
+  /* HOW IT WORKS */
+  .how{padding:70px 0;position:relative;z-index:1;}
+  .section-head{text-align:center;max-width:600px;margin:0 auto 48px;}
+  .section-head h2{font-size:34px;margin-bottom:12px;}
+  .section-head p{color:var(--muted);font-size:15.5px;}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .step{
+    background:var(--bg-elevated);border:1px solid var(--border-soft);
+    border-radius:18px;padding:28px;position:relative;
+  }
+  .step-num{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);
+    background:rgba(250,204,21,0.1);width:34px;height:34px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-weight:700;
+  }
+  .step h3{font-size:18px;margin-bottom:8px;}
+  .step p{color:var(--muted);font-size:14.5px;}
+
+  /* RATE TRANSPARENCY */
+  .rates{padding:70px 0;position:relative;z-index:1;}
+  .rate-panel{
+    background:linear-gradient(135deg,var(--bg-elevated),var(--bg-elevated-2));
+    border:1px solid var(--border);border-radius:22px;padding:40px;
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+  }
+  .rate-panel h2{font-size:28px;margin-bottom:14px;}
+  .rate-panel p{color:var(--muted);font-size:15px;margin-bottom:20px;}
+  .rate-formula{
+    font-family:'JetBrains Mono',monospace;font-size:13.5px;background:rgba(0,0,0,0.3);
+    border:1px solid var(--border-soft);border-radius:12px;padding:16px;color:var(--gold-soft);
+    line-height:1.8;
+  }
+  .rate-table{width:100%;border-collapse:collapse;}
+  .rate-table th{font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted-2);text-align:left;padding-bottom:12px;font-weight:600;}
+  .rate-table td{padding:12px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:14px;}
+  .rate-table td.num{font-family:'JetBrains Mono',monospace;color:var(--gold);text-align:right;}
+
+  /* DASHBOARD PREVIEW */
+  .dash{padding:70px 0;position:relative;z-index:1;}
+  .dash-mock{
+    background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:22px;
+    padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+  .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;}
+  .dash-card{background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:14px;padding:18px;}
+  .dash-card .l{font-size:12px;color:var(--muted-2);margin-bottom:8px;}
+  .dash-card .n{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;}
+  .dash-card .n.gold{color:var(--gold);}
+  .dash-card .n.green{color:var(--success);}
+  .dash-bar{background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:14px;padding:20px;display:flex;align-items:flex-end;gap:8px;height:120px;}
+  .dash-bar .bar{flex:1;background:linear-gradient(180deg,var(--gold),var(--bronze));border-radius:4px 4px 0 0;opacity:0.85;}
+
+  /* WITHDRAWAL METHODS */
+  .methods{padding:60px 0;position:relative;z-index:1;}
+  .method-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .method-card{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:16px;padding:22px;display:flex;align-items:center;gap:16px;}
+  .method-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Sora',sans-serif;font-size:14px;flex-shrink:0;}
+  .method-card h4{font-size:15.5px;margin-bottom:3px;}
+  .method-card p{font-size:13px;color:var(--muted-2);}
+
+  /* FAQ */
+  .faq{padding:70px 0 90px;position:relative;z-index:1;}
+  .faq-item{border-bottom:1px solid var(--border-soft);padding:20px 0;}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15.5px;font-weight:600;}
+  .faq-q svg{transition:transform .25s ease;flex-shrink:0;}
+  .faq-item.open .faq-q svg{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted);font-size:14.5px;}
+  .faq-item.open .faq-a{max-height:200px;padding-top:12px;}
+
+  /* GO PRO / DEPOSIT */
+  .pro{padding:70px 0;position:relative;z-index:1;}
+  .pro-panel{
+    background:linear-gradient(135deg,var(--bg-elevated),var(--bg-elevated-2));
+    border:1px solid var(--border);border-radius:22px;padding:40px;
+    display:grid;grid-template-columns:0.9fr 1.1fr;gap:44px;
+  }
+  .pro-panel h2{font-size:28px;margin-bottom:10px;}
+  .pro-panel > div:first-child > p{color:var(--muted);font-size:15px;margin-bottom:22px;}
+  .pro-perks{list-style:none;margin-bottom:24px;}
+  .pro-perks li{display:flex;gap:10px;padding:8px 0;font-size:14.5px;color:var(--text);}
+  .pro-perks li svg{flex-shrink:0;margin-top:2px;}
+  .pro-price{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--gold);background:rgba(250,204,21,0.08);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+  .pro-price b{font-size:22px;}
+
+  .deposit-form{background:rgba(0,0,0,0.2);border:1px solid var(--border-soft);border-radius:16px;padding:24px;}
+  .form-label{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;display:block;}
+  .amount-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+  .amount-chip{
+    background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:10px;
+    padding:10px 6px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:13.5px;
+    cursor:pointer;transition:all .15s ease;color:var(--muted);
+  }
+  .amount-chip.active{background:rgba(250,204,21,0.12);border-color:var(--gold);color:var(--gold);}
+  .method-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+  .method-chip{
+    background:rgba(255,255,255,0.03);border:1px solid var(--border-soft);border-radius:10px;
+    padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s ease;
+  }
+  .method-chip.active{border-color:var(--gold);background:rgba(250,204,21,0.08);}
+  .method-chip .mi{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;font-family:'Sora',sans-serif;flex-shrink:0;}
+  .method-chip .mt{font-size:13px;}
+  .method-chip .mt .sub{display:block;font-size:11px;color:var(--muted-2);font-family:'JetBrains Mono',monospace;}
+
+  .dropzone{
+    border:1.5px dashed var(--border-soft);border-radius:12px;padding:22px;text-align:center;
+    cursor:pointer;transition:all .15s ease;margin-bottom:18px;position:relative;
+  }
+  .dropzone:hover,.dropzone.drag{border-color:var(--gold);background:rgba(250,204,21,0.04);}
+  .dropzone p{font-size:13.5px;color:var(--muted);margin-top:8px;}
+  .dropzone .dz-preview{max-width:100%;max-height:120px;border-radius:8px;margin-top:10px;display:none;}
+  .dropzone input{display:none;}
+
+  .deposit-history{margin-top:26px;}
+  .dh-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:13.5px;}
+  .dh-row .dh-left{display:flex;flex-direction:column;gap:2px;}
+  .dh-row .dh-amt{font-family:'JetBrains Mono',monospace;font-weight:600;}
+  .dh-row .dh-meta{color:var(--muted-2);font-size:12px;}
+  .badge{padding:4px 10px;border-radius:100px;font-size:11.5px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .badge.pending{background:rgba(250,204,21,0.12);color:var(--gold);}
+  .badge.approved{background:rgba(16,185,129,0.14);color:var(--success);}
+  .badge.rejected{background:rgba(239,68,68,0.14);color:var(--error);}
+
+  .field-note{font-size:12px;color:var(--muted-2);margin-top:-10px;margin-bottom:16px;}
+
+  /* ADMIN */
+  #adminView{display:none;}
+  #adminView.active{display:block;}
+  #siteView.hidden{display:none;}
+  .admin-shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh;}
+  .admin-sidebar{background:var(--bg-elevated);border-right:1px solid var(--border-soft);padding:24px 16px;position:sticky;top:0;height:100vh;}
+  .admin-sidebar .logo{margin-bottom:28px;padding:0 8px;}
+  .admin-nav{list-style:none;}
+  .admin-nav li a{
+    display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;
+    font-size:14px;color:var(--muted);margin-bottom:4px;cursor:pointer;transition:all .15s ease;
+  }
+  .admin-nav li a:hover{background:rgba(255,255,255,0.04);color:var(--text);}
+  .admin-nav li a.active{background:rgba(250,204,21,0.1);color:var(--gold);}
+  .admin-main{padding:32px 36px;}
+  .admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+  .admin-head h2{font-size:24px;}
+  .admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+  .astat{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:14px;padding:18px;}
+  .astat .n{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--gold);}
+  .astat .l{font-size:12.5px;color:var(--muted-2);margin-top:4px;}
+  .admin-panel-block{background:var(--bg-elevated);border:1px solid var(--border-soft);border-radius:16px;padding:22px;margin-bottom:24px;}
+  .admin-panel-block h3{font-size:16px;margin-bottom:16px;}
+  .atable{width:100%;border-collapse:collapse;}
+  .atable th{text-align:left;font-size:11.5px;text-transform:uppercase;color:var(--muted-2);padding-bottom:10px;font-weight:600;letter-spacing:0.04em;}
+  .atable td{padding:12px 10px 12px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:13.5px;vertical-align:middle;}
+  .atable img.thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;border:1px solid var(--border-soft);}
+  .thumb-placeholder{width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted-2);border:1px solid var(--border-soft);}
+  .arow-actions{display:flex;gap:8px;}
+  .abtn{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;}
+  .abtn.approve{background:rgba(16,185,129,0.15);color:var(--success);}
+  .abtn.approve:hover{background:rgba(16,185,129,0.25);}
+  .abtn.reject{background:rgba(239,68,68,0.15);color:var(--error);}
+  .abtn.reject:hover{background:rgba(239,68,68,0.25);}
+  .abtn:disabled{opacity:0.4;cursor:not-allowed;}
+  .admin-back{position:fixed;bottom:24px;right:24px;z-index:60;}
+
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center;z-index:100;cursor:zoom-out;}
+  .lightbox.show{display:flex;}
+  .lightbox img{max-width:80%;max-height:80%;border-radius:12px;}
+
+  /* AUTH MODAL */
+  .auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+  .auth-overlay.show{display:flex;}
+  .auth-modal{
+    background:linear-gradient(180deg,var(--bg-elevated),var(--bg-elevated-2));
+    border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:400px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .auth-modal h3{font-size:20px;margin-bottom:6px;}
+  .auth-modal .sub{color:var(--muted);font-size:13.5px;margin-bottom:22px;}
+  .auth-field{margin-bottom:14px;}
+  .auth-field label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:6px;}
+  .auth-field input{
+    width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border-soft);
+    background:rgba(0,0,0,0.25);color:var(--text);font-size:14px;font-family:'Inter',sans-serif;
+  }
+  .auth-field input:focus{outline:none;border-color:var(--gold);}
+  .auth-error{color:var(--error);font-size:13px;margin-bottom:12px;display:none;}
+  .auth-success{color:var(--success);font-size:13px;margin-bottom:12px;display:none;}
+  .auth-switch{text-align:center;font-size:13.5px;color:var(--muted);margin-top:16px;}
+  .auth-switch a{color:var(--gold);cursor:pointer;}
+  .auth-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+  .auth-modal{position:relative;}
+  .user-chip{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted);}
+  .user-chip b{color:var(--gold);}
+
+  @media (max-width:900px){
+    .pro-panel{grid-template-columns:1fr;}
+    .admin-shell{grid-template-columns:1fr;}
+    .admin-sidebar{position:relative;height:auto;}
+    .admin-stats{grid-template-columns:repeat(2,1fr);}
+  }
+
+  footer{border-top:1px solid var(--border-soft);padding:40px 0;position:relative;z-index:1;}
+  .foot-grid{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-links{display:flex;gap:24px;font-size:13.5px;color:var(--muted);flex-wrap:wrap;}
+  .foot-links a:hover{color:var(--gold);}
+  .foot-copy{font-size:13px;color:var(--muted-2);}
+
+  @media (max-width:860px){
+    .nav-links,.nav-cta .btn-ghost{display:none;}
+    .nav-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .hero h1{font-size:36px;}
+    .compare-grid,.steps,.rate-panel,.method-grid{grid-template-columns:1fr;}
+    .dash-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div id="siteView">
+<nav>
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">MR</div>Mera Rozgar</div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#rates">Payout rates</a>
+      <a href="#pro">Go Pro</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta" id="navCta">
+      <a class="btn btn-ghost" onclick="showAdmin()">Admin panel</a>
+      <a class="btn btn-ghost" onclick="openAuth('login')">Log in</a>
+      <a class="btn btn-gold" onclick="openAuth('register')">Get started</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Real ad-network payouts</div>
+      <h1>Turn spare minutes into <span class="accent">real money</span> — no deposit, ever.</h1>
+      <p>Watch short rewarded ads and get paid a share of what advertisers actually pay us. No packages to buy, no referrals required to withdraw. Try the earning simulator below — it runs on the same rates real users get.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold">Create free account</a>
+        <a class="btn btn-ghost">See payout rates</a>
+      </div>
+      <div class="hero-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Zero deposit required to start earning
+      </div>
+    </div>
+
+    <div class="sim-card">
+      <div class="toast" id="toast">+ Rs 0.18 credited</div>
+      <div class="sim-head">
+        <span>Try it — live simulator</span>
+        <div class="sim-live">Sample rates</div>
+      </div>
+      <div class="wallet-display">
+        <div class="wallet-label">Simulated wallet balance</div>
+        <div class="wallet-amount mono" id="walletAmt">Rs 0.00</div>
+      </div>
+      <div class="ad-slot">
+        <div class="ad-slot-row">
+          <span id="adTitle">Rewarded video · 15s</span>
+          <span class="rate mono" id="adRate">≈ Rs 0.15–0.22</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+        <div class="ad-status" id="adStatus">Tap "Watch ad" to begin</div>
+      </div>
+      <button class="btn btn-gold" id="watchBtn" style="width:100%;">Watch ad</button>
+      <div class="sim-stats">
+        <div class="sim-stat"><div class="n mono" id="statCount">0</div><div class="l">Ads watched today</div></div>
+        <div class="sim-stat"><div class="n mono" id="statLeft">20</div><div class="l">Remaining today</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="wrap">
+    <div class="compare-head">
+      <div class="eyebrow" style="margin:0 auto 16px;width:fit-content;">Why trust this</div>
+      <h2>We're not built like the apps that never pay out</h2>
+      <p>A lot of "earning apps" ask you to deposit money and recruit friends before you can withdraw. That structure only survives on new deposits — it's not how we work.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-col bad">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Typical "earning" apps</h3>
+        <ul class="compare-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Require you to buy a "package" before earning</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Promise per-ad payouts far above real ad rates</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Block withdrawals until you recruit 3+ paying friends</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>Depend on new deposits to pay existing users</li>
+        </ul>
+      </div>
+      <div class="compare-col good">
+        <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Mera Rozgar</h3>
+        <ul class="compare-list">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Free to join, nothing to buy, ever</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Payouts are a transparent share of real ad revenue</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Withdraw anytime you hit the minimum — no recruiting needed</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Revenue comes from advertisers, not from other users</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>How it actually works</h2>
+      <p>Three steps, no hidden gates.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Watch a rewarded ad</h3>
+        <p>Short video or interactive ad through a certified ad network. You control when to start.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Get paid your share</h3>
+        <p>We pass on a fixed percentage of what the advertiser actually paid for that impression — credited instantly.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Withdraw to your wallet</h3>
+        <p>Once you hit the minimum balance, cash out to JazzCash or Easypaisa. No referral count required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rates" id="rates">
+  <div class="wrap">
+    <div class="rate-panel">
+      <div>
+        <h2>The math, in the open</h2>
+        <p>Ad networks pay publishers per completed view, typically a few cents. We take a small platform cut and pass the rest straight to you — same rate whether you've watched 1 ad or 1,000.</p>
+        <div class="rate-formula">
+          your_payout = ad_network_payment<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;× revenue_share (65%)<br>
+          <span style="color:#94A3B8">// no package multiplier, no referral bonus gate</span>
+        </div>
+      </div>
+      <div>
+        <table class="rate-table">
+          <tr><th>Ad format</th><th style="text-align:right;">Typical payout</th></tr>
+          <tr><td>15s rewarded video</td><td class="num">Rs 0.12 – 0.22</td></tr>
+          <tr><td>30s rewarded video</td><td class="num">Rs 0.20 – 0.38</td></tr>
+          <tr><td>Interactive playable</td><td class="num">Rs 0.30 – 0.55</td></tr>
+          <tr><td>Daily cap</td><td class="num">20 ads / day</td></tr>
+          <tr><td>Minimum withdrawal</td><td class="num">Rs 150</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dash" id="dashboard">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Your dashboard</h2>
+      <p>Everything about your earnings, in one clean view.</p>
+    </div>
+    <div class="dash-mock">
+      <div class="dash-grid">
+        <div class="dash-card"><div class="l">Wallet balance</div><div class="n gold">Rs 84.60</div></div>
+        <div class="dash-card"><div class="l">Today's earnings</div><div class="n green">Rs 6.40</div></div>
+        <div class="dash-card"><div class="l">Ads watched today</div><div class="n">14 / 20</div></div>
+        <div class="dash-card"><div class="l">Total lifetime</div><div class="n">Rs 612.90</div></div>
+      </div>
+      <div class="dash-bar">
+        <div class="bar" style="height:40%;"></div>
+        <div class="bar" style="height:65%;"></div>
+        <div class="bar" style="height:35%;"></div>
+        <div class="bar" style="height:80%;"></div>
+        <div class="bar" style="height:55%;"></div>
+        <div class="bar" style="height:90%;"></div>
+        <div class="bar" style="height:70%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="methods">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Withdraw your way</h2>
+      <p>Cash out directly to the wallets people already use.</p>
+    </div>
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-icon" style="background:#EE3639;color:#fff;">JC</div>
+        <div><h4>JazzCash</h4><p>Instant transfer, no fee under Rs 500</p></div>
+      </div>
+      <div class="method-card">
+        <div class="method-icon" style="background:#1EA64C;color:#fff;">EP</div>
+        <div><h4>Easypaisa</h4><p>Instant transfer, no fee under Rs 500</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pro" id="pro">
+  <div class="wrap">
+    <div class="pro-panel">
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px;">Optional upgrade</div>
+        <h2>Go Pro</h2>
+        <p>Pro is a subscription you buy for yourself — it upgrades your account, it doesn't unlock the ability to earn. Free accounts can watch ads and withdraw with zero payment, always.</p>
+        <ul class="pro-perks">
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>40 ads/day instead of 20 — double the daily cap</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Priority withdrawal processing (under 3 hours)</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>No interstitial ads while browsing the app itself</li>
+        </ul>
+        <div class="pro-price">Rs <b>499</b> / month <span style="color:var(--muted-2);">· cancel anytime</span></div>
+      </div>
+
+      <div class="deposit-form">
+        <label class="form-label">Amount</label>
+        <div class="amount-row" id="amountRow">
+          <div class="amount-chip" data-amt="499">Rs 499</div>
+          <div class="amount-chip" data-amt="998">Rs 998</div>
+          <div class="amount-chip" data-amt="1497">Rs 1497</div>
+          <div class="amount-chip" data-amt="0" id="customChip">Custom</div>
+        </div>
+
+        <label class="form-label">Payment method</label>
+        <div class="method-row" id="methodRow">
+          <div class="method-chip active" data-method="JazzCash">
+            <div class="mi" style="background:#EE3639;color:#fff;">JC</div>
+            <div class="mt">JazzCash<span class="sub">Number set by admin</span></div>
+          </div>
+          <div class="method-chip" data-method="Easypaisa">
+            <div class="mi" style="background:#1EA64C;color:#fff;">EP</div>
+            <div class="mt">Easypaisa<span class="sub">Number set by admin</span></div>
+          </div>
+        </div>
+        <div class="field-note" id="accountNumberNote">Send to: <span class="mono">— to be added by admin —</span></div>
+
+        <label class="form-label">Payment screenshot</label>
+        <div class="dropzone" id="dropzone">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          <p id="dzText">Click to upload or drag a screenshot here</p>
+          <img class="dz-preview" id="dzPreview" />
+          <input type="file" id="fileInput" accept="image/*" />
+        </div>
+
+        <button class="btn btn-gold" style="width:100%;" id="submitDeposit">Submit for review</button>
+
+        <div class="deposit-history" id="depositHistory">
+          <label class="form-label">Your deposit history</label>
+          <div id="dhList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head">
+      <h2>Frequently asked</h2>
+    </div>
+    <div class="faq-item open">
+      <div class="faq-q">Do I have to pay anything to join?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="faq-a">No. Signing up and earning is completely free. There is no package to purchase and no deposit required at any point.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why do other apps pay so much more per ad?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="faq-a">If a payout is far above what advertisers actually pay for an ad view, it isn't coming from ad revenue — it's coming from other users' deposits. We only pay out what advertisers actually pay us.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need referrals to withdraw?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="faq-a">No. Referrals are optional and give a small bonus, but they are never required to withdraw your own earnings.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How fast are withdrawals processed?<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="faq-a">Most withdrawals to JazzCash or Easypaisa are reviewed and sent within 24 hours once you're above the Rs 150 minimum.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="logo"><div class="logo-mark">MR</div>Mera Rozgar</div>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#rates">Rates</a>
+      <a href="#faq">FAQ</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <div class="foot-copy">© 2026 Mera Rozgar. Demo preview.</div>
+  </div>
+</footer>
+</div><!-- /siteView -->
+
+<div id="adminView">
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="logo"><div class="logo-mark">MR</div>Admin</div>
+      <ul class="admin-nav">
+        <li><a class="active" data-panel="overview">Overview</a></li>
+        <li><a data-panel="deposits">Deposits</a></li>
+        <li><a data-panel="withdrawals">Withdrawals</a></li>
+        <li><a data-panel="users">Users</a></li>
+      </ul>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-head">
+        <h2 id="adminPanelTitle">Overview</h2>
+        <a class="btn btn-ghost" onclick="showSite()">← Back to site</a>
+      </div>
+
+      <div id="panel-overview">
+        <div class="admin-stats">
+          <div class="astat"><div class="n" id="statUsers">1,204</div><div class="l">Total users</div></div>
+          <div class="astat"><div class="n" id="statPendingDep">0</div><div class="l">Pending deposits</div></div>
+          <div class="astat"><div class="n" id="statPendingWd">2</div><div class="l">Pending withdrawals</div></div>
+          <div class="astat"><div class="n" id="statRevenue">Rs 0</div><div class="l">Approved deposit revenue</div></div>
+        </div>
+        <div class="admin-panel-block">
+          <h3>Recent activity</h3>
+          <p style="color:var(--muted);font-size:13.5px;">New deposit and withdrawal requests appear in their respective tabs for review.</p>
+        </div>
+      </div>
+
+      <div id="panel-deposits" style="display:none;">
+        <div class="admin-panel-block">
+          <h3>Pending deposits</h3>
+          <table class="atable">
+            <tr><th>Screenshot</th><th>User</th><th>Method</th><th>Amount</th><th>Submitted</th><th>Status</th><th></th></tr>
+            <tbody id="depositTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="panel-withdrawals" style="display:none;">
+        <div class="admin-panel-block">
+          <h3>Withdrawal requests</h3>
+          <table class="atable">
+            <tr><th>User</th><th>Method</th><th>Account</th><th>Amount</th><th>Status</th><th></th></tr>
+            <tbody id="withdrawalTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="panel-users" style="display:none;">
+        <div class="admin-panel-block">
+          <h3>Users</h3>
+          <table class="atable">
+            <tr><th>Name</th><th>Tier</th><th>Wallet</th><th>Status</th><th></th></tr>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-modal">
+    <button class="auth-close" onclick="closeAuth()">&times;</button>
+
+    <div id="view-login">
+      <h3>Log in</h3>
+      <p class="sub">Welcome back to Mera Rozgar.</p>
+      <div class="auth-error" id="loginError"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+      <button class="btn btn-gold" style="width:100%;" onclick="doLogin()">Log in</button>
+      <div class="auth-switch">No account? <a onclick="switchAuth('register')">Sign up</a> · <a onclick="switchAuth('forgot')">Forgot password?</a></div>
+    </div>
+
+    <div id="view-register" style="display:none;">
+      <h3>Create account</h3>
+      <p class="sub">Free forever. No deposit required to start earning.</p>
+      <div class="auth-error" id="registerError"></div>
+      <div class="auth-field"><label>Full name</label><input type="text" id="regName" placeholder="Your name"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="regEmail" placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="regPassword" placeholder="At least 6 characters"></div>
+      <button class="btn btn-gold" style="width:100%;" onclick="doRegister()">Create account</button>
+      <div class="auth-switch">Already have an account? <a onclick="switchAuth('login')">Log in</a></div>
+    </div>
+
+    <div id="view-verify" style="display:none;">
+      <h3>Verify your email</h3>
+      <p class="sub" id="verifySub">Enter the 6-digit code we emailed you.</p>
+      <div class="auth-error" id="verifyError"></div>
+      <div class="auth-field"><label>Verification code</label><input type="text" id="verifyOtp" maxlength="6" placeholder="123456"></div>
+      <button class="btn btn-gold" style="width:100%;" onclick="doVerify()">Verify</button>
+      <div class="auth-switch"><a onclick="doResendOtp()">Resend code</a></div>
+    </div>
+
+    <div id="view-forgot" style="display:none;">
+      <h3>Reset password</h3>
+      <p class="sub">We'll email you a code to reset it.</p>
+      <div class="auth-error" id="forgotError"></div>
+      <div class="auth-success" id="forgotSuccess"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="forgotEmail" placeholder="you@example.com"></div>
+      <button class="btn btn-gold" style="width:100%;" onclick="doForgot()">Send reset code</button>
+      <div class="auth-switch"><a onclick="switchAuth('reset')">I already have a code</a> · <a onclick="switchAuth('login')">Back to log in</a></div>
+    </div>
+
+    <div id="view-reset" style="display:none;">
+      <h3>Enter new password</h3>
+      <p class="sub">Use the code from your email.</p>
+      <div class="auth-error" id="resetError"></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="resetEmail" placeholder="you@example.com"></div>
+      <div class="auth-field"><label>Reset code</label><input type="text" id="resetOtp" maxlength="6" placeholder="123456"></div>
+      <div class="auth-field"><label>New password</label><input type="password" id="resetPassword" placeholder="At least 6 characters"></div>
+      <button class="btn btn-gold" style="width:100%;" onclick="doReset()">Update password</button>
+      <div class="auth-switch"><a onclick="switchAuth('login')">Back to log in</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox"><img id="lightboxImg" /></div>
+
+<script>
+  // FAQ toggle
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click',()=>{
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Earning simulator (in-memory state only)
+  const rates = [
+    {label:'15s rewarded video', min:0.12, max:0.22, seconds:3},
+    {label:'30s rewarded video', min:0.20, max:0.38, seconds:4},
+    {label:'Interactive playable', min:0.30, max:0.55, seconds:3.5},
+  ];
+  let wallet = 0, watched = 0, remaining = 20, isPlaying = false;
+  const walletEl = document.getElementById('walletAmt');
+  const btn = document.getElementById('watchBtn');
+  const fill = document.getElementById('progFill');
+  const status = document.getElementById('adStatus');
+  const adTitle = document.getElementById('adTitle');
+  const adRate = document.getElementById('adRate');
+  const statCount = document.getElementById('statCount');
+  const statLeft = document.getElementById('statLeft');
+  const toast = document.getElementById('toast');
+
+  function pickAd(){
+    const r = rates[Math.floor(Math.random()*rates.length)];
+    adTitle.textContent = r.label;
+    adRate.textContent = `≈ Rs ${r.min.toFixed(2)}–${r.max.toFixed(2)}`;
+    return r;
+  }
+  let currentAd = pickAd();
+
+  // ---- Auth: talks to the real backend at /api/auth ----
+  const API = '/api/auth';
+  let currentUser = null;
+  let pendingVerifyEmail = null;
+
+  function getToken(){ return localStorage.getItem('mr_token'); }
+  function setToken(t){ t ? localStorage.setItem('mr_token', t) : localStorage.removeItem('mr_token'); }
+
+  function openAuth(view){
+    document.getElementById('authOverlay').classList.add('show');
+    switchAuth(view);
+  }
+  function closeAuth(){ document.getElementById('authOverlay').classList.remove('show'); }
+  function switchAuth(view){
+    ['login','register','verify','forgot','reset'].forEach(v=>{
+      document.getElementById('view-'+v).style.display = (v===view) ? 'block' : 'none';
+    });
+    document.querySelectorAll('.auth-error,.auth-success').forEach(el=>el.style.display='none');
+  }
+  function showAuthError(id, msg){
+    const el = document.getElementById(id);
+    el.textContent = msg; el.style.display = 'block';
+  }
+  function showAuthSuccess(id, msg){
+    const el = document.getElementById(id);
+    el.textContent = msg; el.style.display = 'block';
+  }
+
+  async function api(path, body){
+    const headers = {'Content-Type':'application/json'};
+    const token = getToken();
+    if(token) headers['Authorization'] = 'Bearer '+token;
+    const res = await fetch(API+path, { method:'POST', headers, body: body?JSON.stringify(body):undefined });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.message || 'Something went wrong.');
+    return data;
+  }
+
+  async function doRegister(){
+    try{
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      await api('/register', { name, email, password });
+      pendingVerifyEmail = email;
+      document.getElementById('verifySub').textContent = `Enter the 6-digit code sent to ${email}.`;
+      switchAuth('verify');
+    }catch(err){ showAuthError('registerError', err.message); }
+  }
+
+  async function doVerify(){
+    try{
+      const otp = document.getElementById('verifyOtp').value.trim();
+      const data = await api('/verify-otp', { email: pendingVerifyEmail, otp });
+      setToken(data.token);
+      currentUser = data.user;
+      closeAuth();
+      updateNavForUser();
+    }catch(err){ showAuthError('verifyError', err.message); }
+  }
+
+  async function doResendOtp(){
+    try{ await api('/resend-otp', { email: pendingVerifyEmail }); showAuthError('verifyError',''); alert('A new code has been sent.'); }
+    catch(err){ showAuthError('verifyError', err.message); }
+  }
+
+  async function doLogin(){
+    try{
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const data = await api('/login', { email, password });
+      setToken(data.token);
+      currentUser = data.user;
+      closeAuth();
+      updateNavForUser();
+    }catch(err){
+      if(err.message && err.message.toLowerCase().includes('verify')){
+        pendingVerifyEmail = document.getElementById('loginEmail').value.trim();
+        switchAuth('verify');
+      } else {
+        showAuthError('loginError', err.message);
+      }
+    }
+  }
+
+  async function doForgot(){
+    try{
+      const email = document.getElementById('forgotEmail').value.trim();
+      const data = await api('/forgot-password', { email });
+      showAuthSuccess('forgotSuccess', data.message);
+    }catch(err){ showAuthError('forgotError', err.message); }
+  }
+
+  async function doReset(){
+    try{
+      const email = document.getElementById('resetEmail').value.trim();
+      const otp = document.getElementById('resetOtp').value.trim();
+      const newPassword = document.getElementById('resetPassword').value;
+      await api('/reset-password', { email, otp, newPassword });
+      alert('Password updated. Please log in.');
+      switchAuth('login');
+    }catch(err){ showAuthError('resetError', err.message); }
+  }
+
+  function updateNavForUser(){
+    const nav = document.getElementById('navCta');
+    if(currentUser){
+      nav.innerHTML = `
+        <span class="user-chip">Hi, <b>${currentUser.name.split(' ')[0]}</b> · ${currentUser.tier==='pro'?'Pro':'Free'}</span>
+        <a class="btn btn-ghost" onclick="showAdmin()">Admin panel</a>
+        <a class="btn btn-ghost" onclick="doLogout()">Log out</a>`;
+    }
+  }
+  function doLogout(){
+    setToken(null); currentUser = null;
+    location.reload();
+  }
+
+  // On page load, check if a saved session is still valid
+  (async function initSession(){
+    const token = getToken();
+    if(!token) return;
+    try{
+      const res = await fetch(API+'/me', { headers:{ 'Authorization':'Bearer '+token } });
+      if(!res.ok) throw new Error();
+      const data = await res.json();
+      currentUser = data.user;
+      updateNavForUser();
+    }catch(e){ setToken(null); }
+  })();
+
+  // ---- Shared demo data store (in-memory only) ----
+  // ---- Deposit form (real: calls /api/user/deposit) ----
+  let selectedAmount = 499, selectedMethod = 'JazzCash', uploadedFile = null;
+
+  document.querySelectorAll('.amount-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.amount-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      if(chip.id==='customChip'){
+        const val = prompt('Enter custom amount (Rs)','500');
+        selectedAmount = val ? parseFloat(val)||0 : 0;
+        chip.textContent = selectedAmount ? 'Rs '+selectedAmount : 'Custom';
+      } else {
+        selectedAmount = parseFloat(chip.dataset.amt);
+      }
+    });
+  });
+  document.querySelector('.amount-chip').classList.add('active');
+
+  document.querySelectorAll('.method-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.method-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedMethod = chip.dataset.method;
+      document.getElementById('accountNumberNote').innerHTML =
+        `Send to: <span class="mono">— to be added by admin —</span> (${selectedMethod})`;
+    });
+  });
+
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const dzPreview = document.getElementById('dzPreview');
+  const dzText = document.getElementById('dzText');
+  dropzone.addEventListener('click', ()=>fileInput.click());
+  dropzone.addEventListener('dragover', e=>{e.preventDefault();dropzone.classList.add('drag');});
+  dropzone.addEventListener('dragleave', ()=>dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', e=>{
+    e.preventDefault();dropzone.classList.remove('drag');
+    if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', e=>{
+    if(e.target.files[0]) handleFile(e.target.files[0]);
+  });
+  function handleFile(file){
+    uploadedFile = file;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      dzPreview.src = reader.result;
+      dzPreview.style.display = 'block';
+      dzText.textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Uploads directly to Cloudinary using an unsigned upload preset (set these two values
+  // after creating a free Cloudinary account — see README "Image uploads" section).
+  const CLOUDINARY_CLOUD_NAME = 'YOUR_CLOUD_NAME';
+  const CLOUDINARY_UPLOAD_PRESET = 'YOUR_UNSIGNED_PRESET';
+
+  async function uploadScreenshotToCloudinary(file){
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+      method:'POST', body: formData
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error?.message || 'Screenshot upload failed.');
+    return data.secure_url;
+  }
+
+  async function renderDepositHistory(){
+    const list = document.getElementById('dhList');
+    if(!getToken()){
+      list.innerHTML = '<div style="color:var(--muted-2);font-size:13px;padding:10px 0;">Log in to see your deposit history.</div>';
+      return;
+    }
+    try{
+      const res = await fetch('/api/user/deposits', { headers:{ 'Authorization':'Bearer '+getToken() } });
+      const { deposits } = await res.json();
+      if(!deposits || deposits.length===0){
+        list.innerHTML = '<div style="color:var(--muted-2);font-size:13px;padding:10px 0;">No deposits submitted yet.</div>';
+        return;
+      }
+      list.innerHTML = deposits.map(d=>`
+        <div class="dh-row">
+          <div class="dh-left">
+            <span class="dh-amt mono">Rs ${d.amount.toFixed(2)}</span>
+            <span class="dh-meta">${d.method} · ${new Date(d.createdAt).toLocaleDateString()}</span>
+          </div>
+          <span class="badge ${d.status}">${d.status}</span>
+        </div>`).join('');
+    }catch(e){ /* not logged in or network issue — leave as-is */ }
+  }
+  renderDepositHistory();
+
+  document.getElementById('submitDeposit').addEventListener('click', async ()=>{
+    if(!getToken()){ alert('Please log in first.'); openAuth('login'); return; }
+    if(!selectedAmount || selectedAmount<=0){ alert('Enter a valid amount.'); return; }
+    if(!uploadedFile){ alert('Please upload your payment screenshot.'); return; }
+
+    const submitBtn = document.getElementById('submitDeposit');
+    submitBtn.disabled = true; submitBtn.textContent = 'Uploading…';
+    try{
+      const screenshotUrl = await uploadScreenshotToCloudinary(uploadedFile);
+      submitBtn.textContent = 'Submitting…';
+      const res = await fetch('/api/user/deposit', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+getToken() },
+        body: JSON.stringify({ amount: selectedAmount, method: selectedMethod, screenshotUrl })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.message);
+
+      renderDepositHistory();
+      uploadedFile = null;
+      dzPreview.style.display='none';
+      dzText.textContent = 'Click to upload or drag a screenshot here';
+      fileInput.value = '';
+      alert('Submitted! Your deposit is pending admin approval.');
+    }catch(err){
+      alert(err.message || 'Something went wrong.');
+    }finally{
+      submitBtn.disabled = false; submitBtn.textContent = 'Submit for review';
+    }
+  });
+
+
+  // ---- Admin panel (talks to real /api/admin endpoints) ----
+  async function adminApi(path, method='GET', body){
+    const headers = {'Content-Type':'application/json'};
+    const token = getToken();
+    if(token) headers['Authorization'] = 'Bearer '+token;
+    const res = await fetch('/api/admin'+path, { method, headers, body: body?JSON.stringify(body):undefined });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.message || 'Request failed.');
+    return data;
+  }
+
+  function showAdmin(){
+    if(!getToken()){ alert('Please log in with an admin account first.'); openAuth('login'); return; }
+    document.getElementById('siteView').classList.add('hidden');
+    document.getElementById('adminView').classList.add('active');
+    loadAdminOverview();
+    renderAdminDeposits();
+    renderAdminWithdrawals();
+    renderAdminUsers();
+    window.scrollTo(0,0);
+  }
+  function showSite(){
+    document.getElementById('adminView').classList.remove('active');
+    document.getElementById('siteView').classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('.admin-nav a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      document.querySelectorAll('.admin-nav a').forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+      ['overview','deposits','withdrawals','users'].forEach(p=>{
+        document.getElementById('panel-'+p).style.display = (p===link.dataset.panel)?'block':'none';
+      });
+      document.getElementById('adminPanelTitle').textContent = link.textContent;
+    });
+  });
+
+  async function loadAdminOverview(){
+    try{
+      const d = await adminApi('/overview');
+      document.getElementById('statUsers').textContent = d.totalUsers;
+      document.getElementById('statPendingDep').textContent = d.pendingDeposits;
+      document.getElementById('statPendingWd').textContent = d.pendingWithdrawals;
+      document.getElementById('statRevenue').textContent = 'Rs '+d.revenue.toFixed(2);
+    }catch(err){
+      showSite();
+      alert(err.message.includes('Admin') ? 'This account is not an admin.' : err.message);
+    }
+  }
+
+  async function renderAdminDeposits(){
+    try{
+      const { deposits } = await adminApi('/deposits');
+      const body = document.getElementById('depositTableBody');
+      body.innerHTML = deposits.map(d=>`
+        <tr>
+          <td>${d.screenshotUrl ? `<img class="thumb" src="${d.screenshotUrl}" onclick="openLightbox('${d.screenshotUrl}')" style="cursor:zoom-in;">` : `<div class="thumb-placeholder">n/a</div>`}</td>
+          <td>${d.user ? d.user.name : 'Unknown'}</td>
+          <td>${d.method}</td>
+          <td class="mono">Rs ${d.amount.toFixed(2)}</td>
+          <td style="color:var(--muted-2);font-size:12.5px;">${new Date(d.createdAt).toLocaleString()}</td>
+          <td><span class="badge ${d.status}">${d.status}</span></td>
+          <td>
+            <div class="arow-actions">
+              <button class="abtn approve" ${d.status!=='pending'?'disabled':''} onclick="setDepositStatus('${d._id}','approve')">Approve</button>
+              <button class="abtn reject" ${d.status!=='pending'?'disabled':''} onclick="setDepositStatus('${d._id}','reject')">Reject</button>
+            </div>
+          </td>
+        </tr>`).join('');
+    }catch(err){ console.error(err); }
+  }
+  window.setDepositStatus = async function(id, action){
+    try{ await adminApi(`/deposits/${id}/${action}`, 'POST'); renderAdminDeposits(); loadAdminOverview(); }
+    catch(err){ alert(err.message); }
+  };
+  window.openLightbox = function(src){
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('show');
+  };
+  document.getElementById('lightbox').addEventListener('click', function(){ this.classList.remove('show'); });
+
+  async function renderAdminWithdrawals(){
+    try{
+      const { withdrawals } = await adminApi('/withdrawals');
+      const body = document.getElementById('withdrawalTableBody');
+      body.innerHTML = withdrawals.map(w=>`
+        <tr>
+          <td>${w.user ? w.user.name : 'Unknown'}</td>
+          <td>${w.method}</td>
+          <td class="mono" style="color:var(--muted-2);">${w.accountNumber}</td>
+          <td class="mono">Rs ${w.amount.toFixed(2)}</td>
+          <td><span class="badge ${w.status}">${w.status}</span></td>
+          <td>
+            <div class="arow-actions">
+              <button class="abtn approve" ${w.status!=='pending'?'disabled':''} onclick="setWithdrawalStatus('${w._id}','approve')">Approve</button>
+              <button class="abtn reject" ${w.status!=='pending'?'disabled':''} onclick="setWithdrawalStatus('${w._id}','reject')">Reject</button>
+            </div>
+          </td>
+        </tr>`).join('');
+    }catch(err){ console.error(err); }
+  }
+  window.setWithdrawalStatus = async function(id, action){
+    try{ await adminApi(`/withdrawals/${id}/${action}`, 'POST'); renderAdminWithdrawals(); loadAdminOverview(); }
+    catch(err){ alert(err.message); }
+  };
+
+  async function renderAdminUsers(){
+    try{
+      const { users } = await adminApi('/users');
+      const body = document.getElementById('usersTableBody');
+      body.innerHTML = users.map(u=>`
+        <tr>
+          <td>${u.name}<br><span style="color:var(--muted-2);font-size:11.5px;">${u.email}</span></td>
+          <td>${u.tier === 'pro' ? 'Pro' : 'Free'}</td>
+          <td class="mono">Rs ${u.walletBalance.toFixed(2)}</td>
+          <td><span class="badge ${u.isBanned?'rejected':'approved'}">${u.isBanned?'banned':'active'}</span></td>
+          <td>
+            <div class="arow-actions">
+              <button class="abtn ${u.isBanned?'approve':'reject'}" onclick="toggleBan('${u._id}')">${u.isBanned?'Unban':'Ban'}</button>
+            </div>
+          </td>
+        </tr>`).join('');
+    }catch(err){ console.error(err); }
+  }
+  window.toggleBan = async function(id){
+    try{ await adminApi(`/users/${id}/toggle-ban`, 'POST'); renderAdminUsers(); }
+    catch(err){ alert(err.message); }
+  };
+
+  // ---- Deposit form (user-facing, uploads screenshot then calls /api/user/deposit) ----
+
+  btn.addEventListener('click', ()=>{
+    if(isPlaying || remaining<=0) return;
+    isPlaying = true;
+    btn.disabled = true;
+    fill.style.width='0%';
+    let elapsed = 0;
+    const total = currentAd.seconds;
+    status.textContent = 'Playing…';
+    const interval = setInterval(()=>{
+      elapsed += 0.1;
+      const pct = Math.min(100,(elapsed/total)*100);
+      fill.style.width = pct+'%';
+      if(elapsed>=total){
+        clearInterval(interval);
+        const payout = currentAd.min + Math.random()*(currentAd.max-currentAd.min);
+        wallet += payout;
+        watched += 1;
+        remaining -= 1;
+        walletEl.textContent = 'Rs '+wallet.toFixed(2);
+        walletEl.classList.remove('bump'); void walletEl.offsetWidth; walletEl.classList.add('bump');
+        statCount.textContent = watched;
+        statLeft.textContent = remaining;
+        status.textContent = 'Completed ✓';
+        toast.textContent = `+ Rs ${payout.toFixed(2)} credited`;
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'),1800);
+        isPlaying = false;
+        currentAd = pickAd();
+        if(remaining<=0){
+          btn.disabled = true;
+          btn.textContent = 'Daily limit reached';
+          status.textContent = 'Come back tomorrow for more';
+        } else {
+          btn.disabled = false;
+          setTimeout(()=>status.textContent='Tap "Watch ad" to begin', 1400);
+        }
+      }
+    },100);
+  });
+</script>
+
+</body>
+</html>
